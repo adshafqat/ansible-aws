@@ -1,0 +1,30 @@
+---
+- name: First play to connect to AWS
+  hosts: all
+
+  vars:
+    ansible_become: true
+
+  tasks:
+    - name: Yum update
+      yum: 
+        name: '*'
+        state: latest
+
+    - name: Install HTTPD
+      package:
+        name:
+          - httpd
+        state: present
+
+
+    - name: Copy Hello World file
+      copy:
+        src: index.html
+        dest: /var/www/html  
+
+
+    - name: Start Service
+      systemd:
+        name: httpd
+        state: started
