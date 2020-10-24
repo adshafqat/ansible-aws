@@ -1,0 +1,19 @@
+---
+- name: Ansible Play to Delete AWS Servers
+  gather_facts: false
+  hosts: localhost
+  connection: local
+  vars_files: "vars/vars.yml"
+
+  
+  tasks:
+    - name: Execute Terraform Delete Servers
+      terraform:
+        project_path: "{{ project_path }}"
+        plan_file: “{{ plan_file }}”
+        lock: true
+        state: absent
+      register: absent_outputs
+
+    - debug: 
+        var: absent_outputs

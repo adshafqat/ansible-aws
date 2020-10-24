@@ -1,30 +1,74 @@
 ---
-- name: First play to connect to AWS
-  hosts: all
+- name: Ansible Play to Setup AWS Servers
+  gather_facts: false
+  hosts: localhost
+  connection: local
+  vars_files: "vars/vars.yml"
 
-  vars:
-    ansible_become: true
-
+  
   tasks:
-    - name: Yum update
-      yum: 
-        name: '*'
-        state: latest
+    - name: Execute Terraform Plan file
+      terraform:
+        project_path: "{{ project_path }}"
+        plan_file: “{{ plan_file }}”
+        lock: true
+        state: planned
+      register: plan_outputs
 
-    - name: Install HTTPD
-      package:
-        name:
-          - httpd
+    - debug: 
+        var: plan_outputs
+#     Purpose of this task is to start aws instances if they are already created and stoped. 
+#     For the first when there is no server, this task will fail. That's why ignore_errors = yes
+#     For this task to run ansible-galaxy collection install amazon.aws and pip3 install boto should be installed on ansible controller
+    - name: Start aws instances 
+      amazon.aws.ec2:
+          instance_ids:  
+            - '{{ plan_outputs.outputs.masterinstanceid.value }}'
+            - '{{ plan_outputs.outputs.infrainstanceid.value }}'
+            - '{{ plan_outputs.outputs.workerinstanceid.value }}'
+          region: '{{ aws_region }}'
+          state: running
+          wait: True
+          assign_public_ip: yes
+      ignore_errors: yes
+
+    - name: Create Azure VMs
+      terraform:
+        project_path: "{{ project_path }}"
+        lock: true
         state: present
+      register: create_outputs
+
+    - debug: 
+        var: create_outputs
 
 
-    - name: Copy Hello World file
-      copy:
-        src: index.html
-        dest: /var/www/html  
+    - name: Create Inventory File, delete existing and create a fresh invetory
+      shell: |
+       rm "{{ inventory_file_name }}"
+       echo "[all]" > "{{ inventory_file_name }}"
+      args:
+         warn: no       
 
+    - name: Add the newly created EC2 instance(s) to the inventory file
+      blockinfile: 
+          path: "{{ inventory_file_name }}"
+          insertafter: "[all]" 
+          block: |
+            {{ create_outputs.outputs.masterip.value }}
+            {{ create_outputs.outputs.infraip.value }}
+            {{ create_outputs.outputs.workerip.value }}
 
-    - name: Start Service
-      systemd:
-        name: httpd
-        state: started
+    - meta: refresh_inventory
+
+#   Give a pause so servers can initlized and get public ips 
+    - pause:
+        minutes: 2
+
+- name: Ansible Play to install Kubernetes on AWS Servers
+  hosts: all
+  gather_facts: true
+   
+  tasks:
+    - name: Ping
+      ping:

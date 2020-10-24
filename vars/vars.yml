@@ -1,0 +1,4 @@
+aws_region: us-east-1
+project_path: terraform/
+plan_file: aws_vm.tf
+inventory_file_name: inventory.ini
