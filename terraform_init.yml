@@ -1,0 +1,14 @@
+---
+- name: Ansible Play to Initlize Terraform
+  gather_facts: false
+  hosts: localhost
+  connection: local
+
+  
+  tasks:
+    - name: Initlize Terraform
+      shell: |
+        cd terraform
+        terraform init
+      args:
+        warn: no   
