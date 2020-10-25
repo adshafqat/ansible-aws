@@ -25,7 +25,6 @@ ssh-keygen -y -f ~/.ssh/aws-servers-key-pair.pem > ~/.ssh/aws-servers-key-pair.p
 
 
 VM creation in AWS using Terraform. This playbook dynamically update inventory file with newly created server IPs
-
 ansible-playbook -i inventory.ini create_cluster.yml 
 
 For Setting up a local Kubernetes Cluster (Centos VM runnings on Virtual box)
