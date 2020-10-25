@@ -1,0 +1,90 @@
+1025 23:02:56.507404    7643 manifests.go:109] [control-plane] adding volume "k8s-certs" for component "kube-apiserver"
+I1025 23:02:56.513400    7643 manifests.go:135] [control-plane] wrote static Pod manifest for component "kube-apiserver" to "/etc/kubernetes/manifests/kube-apiserver.yaml"
+[control-plane] Creating static Pod manifest for "kube-controller-manager"
+I1025 23:02:56.513419    7643 manifests.go:96] [control-plane] getting StaticPodSpecs
+I1025 23:02:56.513613    7643 manifests.go:109] [control-plane] adding volume "ca-certs" for component "kube-controller-manager"
+I1025 23:02:56.513619    7643 manifests.go:109] [control-plane] adding volume "etc-pki" for component "kube-controller-manager"
+I1025 23:02:56.513622    7643 manifests.go:109] [control-plane] adding volume "flexvolume-dir" for component "kube-controller-manager"
+I1025 23:02:56.513625    7643 manifests.go:109] [control-plane] adding volume "k8s-certs" for component "kube-controller-manager"
+I1025 23:02:56.513629    7643 manifests.go:109] [control-plane] adding volume "kubeconfig" for component "kube-controller-manager"
+I1025 23:02:56.514395    7643 manifests.go:135] [control-plane] wrote static Pod manifest for component "kube-controller-manager" to "/etc/kubernetes/manifests/kube-controller-manager.yaml"
+[control-plane] Creating static Pod manifest for "kube-scheduler"
+I1025 23:02:56.514418    7643 manifests.go:96] [control-plane] getting StaticPodSpecs
+I1025 23:02:56.514785    7643 manifests.go:109] [control-plane] adding volume "kubeconfig" for component "kube-scheduler"
+I1025 23:02:56.515834    7643 manifests.go:135] [control-plane] wrote static Pod manifest for component "kube-scheduler" to "/etc/kubernetes/manifests/kube-scheduler.yaml"
+[etcd] Creating static Pod manifest for local etcd in "/etc/kubernetes/manifests"
+I1025 23:02:56.516912    7643 local.go:82] [etcd] wrote Static Pod manifest for a local etcd member to "/etc/kubernetes/manifests/etcd.yaml"
+I1025 23:02:56.516928    7643 waitcontrolplane.go:87] [wait-control-plane] Waiting for the API server to be healthy
+[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
+[kubelet-check] Initial timeout of 40s passed.
+
+	Unfortunately, an error has occurred:
+		timed out waiting for the condition
+
+	This error is likely caused by:
+		- The kubelet is not running
+		- The kubelet is unhealthy due to a misconfiguration of the node in some way (required cgroups disabled)
+
+	If you are on a systemd-powered system, you can try to troubleshoot the error with the following commands:
+		- 'systemctl status kubelet'
+		- 'journalctl -xeu kubelet'
+
+	Additionally, a control plane component may have crashed or exited when started by the container runtime.
+	To troubleshoot, list all containers using your preferred container runtimes CLI.
+
+	Here is one example how you may list all Kubernetes containers running in docker:
+		- 'docker ps -a | grep kube | grep -v pause'
+		Once you have found the failing container, you can inspect its logs with:
+		- 'docker logs CONTAINERID'
+
+couldn't initialize a Kubernetes cluster
+k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/init.runWaitControlPlanePhase
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/init/waitcontrolplane.go:114
+k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow.(*Runner).Run.func1
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow/runner.go:234
+k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow.(*Runner).visitAll
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow/runner.go:422
+k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow.(*Runner).Run
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow/runner.go:207
+k8s.io/kubernetes/cmd/kubeadm/app/cmd.NewCmdInit.func1
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/app/cmd/init.go:149
+k8s.io/kubernetes/vendor/github.com/spf13/cobra.(*Command).execute
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/vendor/github.com/spf13/cobra/command.go:842
+k8s.io/kubernetes/vendor/github.com/spf13/cobra.(*Command).ExecuteC
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/vendor/github.com/spf13/cobra/command.go:950
+k8s.io/kubernetes/vendor/github.com/spf13/cobra.(*Command).Execute
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/vendor/github.com/spf13/cobra/command.go:887
+k8s.io/kubernetes/cmd/kubeadm/app.Run
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/app/kubeadm.go:50
+main.main
+	_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/kubeadm.go:25
+runtime.main
+	/usr/local/go/src/runtime/proc.go:204
+runtime.goexit
+	/usr/local/go/src/runtime/asm_amd64.s:1374
+error execution phase wait-control-plane
+k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow.(*Runner).Run.func1
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow/runner.go:235
+k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow.(*Runner).visitAll
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow/runner.go:422
+k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow.(*Runner).Run
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow/runner.go:207
+k8s.io/kubernetes/cmd/kubeadm/app/cmd.NewCmdInit.func1
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/app/cmd/init.go:149
+k8s.io/kubernetes/vendor/github.com/spf13/cobra.(*Command).execute
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/vendor/github.com/spf13/cobra/command.go:842
+k8s.io/kubernetes/vendor/github.com/spf13/cobra.(*Command).ExecuteC
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/vendor/github.com/spf13/cobra/command.go:950
+k8s.io/kubernetes/vendor/github.com/spf13/cobra.(*Command).Execute
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/vendor/github.com/spf13/cobra/command.go:887
+k8s.io/kubernetes/cmd/kubeadm/app.Run
+	/workspace/anago-v1.19.3-rc.0.69+37babbd0e76c11/src/k8s.io/kubernetes/_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/app/kubeadm.go:50
+main.main
+	_output/dockerized/go/src/k8s.io/kubernetes/cmd/kubeadm/kubeadm.go:25
+runtime.main
+	/usr/local/go/src/runtime/proc.go:204
+runtime.goexit
+	/usr/local/go/src/runtime/asm_amd64.s:1374
+[root@master ~]# 
+
+

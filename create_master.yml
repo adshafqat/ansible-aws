@@ -1,0 +1,32 @@
+---
+- hosts: master
+  become: yes
+
+  vars_files: "vars/vars.yml"
+
+  tasks:
+  - name: Pulling images required for setting up a Kubernetes cluster
+    shell: kubeadm config images pull
+
+  - name: Resetting kubeadm
+    shell: kubeadm reset -f
+    register: output
+
+   #kubeadm init --apiserver-advertise-address 10.11.12.2 --pod-network-cidr=172.16.0.0/16 --ignore-preflight-errors=all --apiserver-advertise-address 52.90.115.85
+  - name: Initializing Kubernetes cluster
+    shell: kubeadm init --apiserver-advertise-address {{ad_addr}} --pod-network-cidr={{cidr_v}} --ignore-preflight-errors=all
+    register: output
+     
+
+  - name: Storing Logs and Generated token for future purpose.
+    local_action: copy content={{ output.stdout }} dest={{ token_file }}
+    become: False 
+
+  - name: Copying required files
+    shell: |
+     mkdir -p $HOME/.kube
+     sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config
+     sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+  - name: Install Network Add-on
+    command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml

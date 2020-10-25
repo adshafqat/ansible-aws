@@ -59,11 +59,18 @@
             {{ create_outputs.outputs.infraip.value }}
             {{ create_outputs.outputs.workerip.value }}
 
+            [master]
+            {{ create_outputs.outputs.masterip.value }}
+
+            [node]
+            {{ create_outputs.outputs.infraip.value }}
+            {{ create_outputs.outputs.workerip.value }}
+
     - meta: refresh_inventory
 
 #   Give a pause so servers can initlized and get public ips 
     - pause:
-        minutes: 2
+        seconds: 5
 
 - name: Ansible Play to install Kubernetes on AWS Servers
   hosts: all
@@ -72,3 +79,8 @@
   tasks:
     - name: Ping
       ping:
+
+
+
+
+

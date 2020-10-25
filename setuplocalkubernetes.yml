@@ -1,0 +1,4 @@
+---
+- import_playbook: initlize_local_kube_cluster.yml
+- import_playbook: create_master.yml
+- import_playbook: create_node.yml

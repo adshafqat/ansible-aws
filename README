@@ -2,6 +2,42 @@ Adeel Shafqat
 
 This respository contain playbooks to create AWS Server using Terraform and install Kubernetes on newly created clusters
 
+
+Prerequsit
+
+The user home directory should have a folder named .aws with credentials file
+
+:~/.aws$ ls -lrt
+total 8
+-rw-rw-r-- 1 adeel adeel 112 Oct 25 17:20 credentials
+
+[default]
+aws_access_key_id=BLABLABLA
+aws_secret_access_key=BLABLABLABLABLA/osiksadjmnksad
+
+
+The SSH key-pair will be used in the Terraform to connect to the EC2 instances.
+
+ssh-keygen -t rsa -b 2048 -f ~/.ssh/aws-servers-key-pair.pem -q -P ''
+chmod 400 ~/.ssh/aws-servers-key-pair.pem
+ssh-keygen -y -f ~/.ssh/aws-servers-key-pair.pem > ~/.ssh/aws-servers-key-pair.pub
+
+
+
+VM creation in AWS using Terraform. This playbook dynamically update inventory file with newly created server IPs
+
+ansible-playbook -i inventory.ini create_cluster.yml 
+
+For Setting up a local Kubernetes Cluster (Centos VM runnings on Virtual box)
+vagrant up (use Vagrantfile)
+ansible-playbook -i local.ini setuplocalkubernetes.yml 
+
+For Setting up a Kubernetes Cluster in AWS
+ansible-playbook -i inventory.ini setupkubernetes.yml
+
+
+
+
 Reference
 https://medium.com/faun/building-repeatable-infrastructure-with-terraform-and-ansible-on-aws-3f082cd398ad
 https://docs.ansible.com/ansible/2.5/modules/terraform_module.html

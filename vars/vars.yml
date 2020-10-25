@@ -2,3 +2,22 @@ aws_region: us-east-1
 project_path: terraform/
 plan_file: aws_vm.tf
 inventory_file_name: inventory.ini
+
+
+ad_addr: 10.11.12.2
+cidr_v: 172.16.0.0/16
+
+packages:
+- kubeadm
+- kubectl
+
+services:
+- docker
+- kubelet
+- firewalld
+
+ports:
+- "6443/tcp"
+- "10250/tcp"
+
+token_file: join_token
