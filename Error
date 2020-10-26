@@ -1,3 +1,5 @@
+Error to investigate
+-------------------------------------------------------------------
 1025 23:02:56.507404    7643 manifests.go:109] [control-plane] adding volume "k8s-certs" for component "kube-apiserver"
 I1025 23:02:56.513400    7643 manifests.go:135] [control-plane] wrote static Pod manifest for component "kube-apiserver" to "/etc/kubernetes/manifests/kube-apiserver.yaml"
 [control-plane] Creating static Pod manifest for "kube-controller-manager"
