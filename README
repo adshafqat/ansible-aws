@@ -1,41 +1,62 @@
-Adeel Shafqat
 
-This respository contain playbooks to create AWS Server using Terraform and install Kubernetes on newly created clusters
+Ansible MiniKube Installer
+==========================
 
+AWS Based Installation
+----------------------
+1. This respository contain playbooks to create AWS Servers using Terraform.
+2. Playbooks to install Kubernetes on newly created AWS Servers
 
-Prerequsit
-
-The user home directory should have a folder named .aws with credentials file
-
-:~/.aws$ ls -lrt
-total 8
--rw-rw-r-- 1 adeel adeel 112 Oct 25 17:20 credentials
-
-[default]
-aws_access_key_id=BLABLABLA
-aws_secret_access_key=BLABLABLABLABLA/osiksadjmnksad
+Local Virtual Box based Installation
+----------------------
+1. Vagrant scripts to create local virtual machines
+2. Playbooks to install Kubernetes on newly created vms
 
 
-The SSH key-pair will be used in the Terraform to connect to the EC2 instances.
+Prerequisite for AWS Based Installation
+------------
+1. Terraform
+2. Ansible 
+3. AWS Collection on Ansible controller: ansible-galaxy collection install amazon.aws
+4. Install boto on Ansible controller: pip3 install boto
+5. The user home directory should have a folder named .aws with credentials file
 
+Prerequisite for Local Installation
+------------
+1. Oracle Virtual Box
+2. Ansible 
+3. Vagrant
+
+
+Steps for AWS Based Installation
+----------------------------
+1. Generate a SSH key-pair. The SSH key-pair will be used in the Terraform to connect to the EC2 instances.
+
+```
 ssh-keygen -t rsa -b 2048 -f ~/.ssh/aws-servers-key-pair.pem -q -P ''
 chmod 400 ~/.ssh/aws-servers-key-pair.pem
 ssh-keygen -y -f ~/.ssh/aws-servers-key-pair.pem > ~/.ssh/aws-servers-key-pair.pub
+```
 
+2. A blank inventory file with only one line [all]. This playbook dynamically update inventory file with newly created server IPs.
+3. For Terraform initlization: ansible-playbook -i inventory.ini terraform_init.yml
+4. VM Creation in Terraform:  ansible-playbook -i inventory.ini create_cluster.yml 
+5. For Setting up a Kubernetes Cluster in AWS: ansible-playbook -i inventory.ini setupkubernetes.yml
+6. For Destroying EC2 instances: ansible-playbook -i inventory.ini destroy_servers.yml
 
-
-VM creation in AWS using Terraform. This playbook dynamically update inventory file with newly created server IPs
-ansible-playbook -i inventory.ini create_cluster.yml 
-
-For Setting up a local Kubernetes Cluster (Centos VM runnings on Virtual box)
-vagrant up (use Vagrantfile)
-ansible-playbook -i local.ini setuplocalkubernetes.yml 
-
-For Setting up a Kubernetes Cluster in AWS
-ansible-playbook -i inventory.ini setupkubernetes.yml
-
-http://www.zaynsolutions.com
+Steps for Local Installation
+----------------------------
+1. Run vagrant up to create new Centos virtual machines
+2. ansible-playbook -i local.ini setuplocalkubernetes.yml  
 
 
 Reference
+------------
 https://docs.ansible.com/ansible/2.5/modules/terraform_module.html
+https://galaxy.ansible.com/amazon/aws?extIdCarryOver=true&sc_cid=701f2000001OH7YAAW
+
+Author
+------------
+Adeel Shafqat
+http://www.zaynsolutions.com
+
