@@ -1,4 +1,3 @@
-
 Ansible MiniKube Installer
 ==========================
 
@@ -9,7 +8,7 @@ AWS Based Installation
 
 Local Virtual Box based Installation
 ----------------------
-1. Vagrant scripts to create local virtual machines
+1. Vagrant scripts to create local Centos 8 virtual machines
 2. Playbooks to install Kubernetes on newly created vms
 
 
@@ -46,8 +45,9 @@ ssh-keygen -y -f ~/.ssh/aws-servers-key-pair.pem > ~/.ssh/aws-servers-key-pair.p
 
 Steps for Local Installation
 ----------------------------
-1. Run vagrant up to create new Centos virtual machines
-2. ansible-playbook -i local.ini setuplocalkubernetes.yml  
+1. Run vagrant up to create new Centos 8 virtual machines
+2. Update local.ini with newly created VM IP addresses
+2. Setup a Local three nodes cluster: ansible-playbook -i local.ini setuplocalkubernetes.yml 
 
 
 Reference
@@ -59,4 +59,3 @@ Author
 ------------
 Adeel Shafqat
 http://www.zaynsolutions.com
-
