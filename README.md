@@ -52,7 +52,7 @@ Steps for Local Installation
 
 Reference
 ------------
-https://docs.ansible.com/ansible/2.5/modules/terraform_module.html
+https://docs.ansible.com/ansible/2.5/modules/terraform_module.html  <br />
 https://galaxy.ansible.com/amazon/aws?extIdCarryOver=true&sc_cid=701f2000001OH7YAAW
 
 Author
