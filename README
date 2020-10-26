@@ -34,9 +34,8 @@ ansible-playbook -i local.ini setuplocalkubernetes.yml
 For Setting up a Kubernetes Cluster in AWS
 ansible-playbook -i inventory.ini setupkubernetes.yml
 
-
+http://www.zaynsolutions.com
 
 
 Reference
-https://medium.com/faun/building-repeatable-infrastructure-with-terraform-and-ansible-on-aws-3f082cd398ad
 https://docs.ansible.com/ansible/2.5/modules/terraform_module.html
