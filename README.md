@@ -12,7 +12,7 @@ Local Virtual Box based Installation
 2. Playbooks to install Kubernetes on newly created vms
 
 
-Prerequisite for AWS Based Installation
+Prerequisite sfor AWS Based Installation
 ------------
 1. Terraform
 2. Ansible 
@@ -20,7 +20,7 @@ Prerequisite for AWS Based Installation
 4. Install boto on Ansible controller: pip3 install boto
 5. The user home directory should have a folder named .aws with credentials file
 
-Prerequisite for Local Installation
+Prerequisites for Local Installation
 ------------
 1. Oracle Virtual Box
 2. Ansible 
