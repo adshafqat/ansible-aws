@@ -12,7 +12,7 @@ Local Virtual Box based Installation
 2. Playbooks to install Kubernetes on newly created vms
 
 
-Prerequisite sfor AWS Based Installation
+Prerequisites for AWS Based Installation
 ------------
 1. Terraform
 2. Ansible 
